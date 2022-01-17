@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres
+    username:
+    password: 
+server:
+  servlet:
+    context-path: "/api"
+  port: 8080

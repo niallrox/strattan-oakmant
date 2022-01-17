@@ -1,0 +1,12 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(':app-person-service')
+    implementation project(':app-user-service')
+    implementation project(':app-commons')
+    implementation project(':app-position-service')
+    implementation project(':app-courses-service')
+    implementation 'dev.akkinoc.spring.boot:orika-spring-boot-starter:2.2.2'
+}

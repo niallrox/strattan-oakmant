@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    jdbc-url: jdbc:postgresql://pg:5432/studs
+    username:
+    password:
+server:
+  servlet:
+    context-path: "/api"
+  port:
+logging:
+  file:
+    name: ./logs/application.log

@@ -1,0 +1,9 @@
+rootProject.name = 'strattan-oakmant'
+
+include 'app-person-service',
+        'app-boot-service',
+        'app-user-service',
+        'app-position-service',
+        'app-courses-service'
+include 'app-commons'
+
