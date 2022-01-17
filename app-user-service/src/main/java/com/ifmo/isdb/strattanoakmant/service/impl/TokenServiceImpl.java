@@ -10,6 +10,9 @@ import com.ifmo.isdb.strattanoakmant.service.ifc.TokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,12 +26,16 @@ import java.util.*;
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
 
+    private static final Logger log =
+            LoggerFactory.getLogger(TokenServiceImpl.class);
+
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
     private final TokenRepository tokenRepository;
 
     @Override
     public JwtToken createToken(Login login) {
+        log.debug(String.format("Creating token for user = %s", login.getLogin()));
         Employee employee = Optional
                 .ofNullable(employeeRepository.findByLoginAndPassword(login.getLogin(), login.getPassword()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -37,10 +44,12 @@ public class TokenServiceImpl implements TokenService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Can't find role by employee id= %s ", employee.getId())));
         JwtToken token = createToken(employee.getId(), role);
+        log.debug(String.format("Created token for user = %s", login.getLogin()));
         return tokenRepository.save(token);
     }
 
     public Employee getUserByToken(String token) {
+        log.debug(String.format("Finding user by token = %s", token));
         Map<String, Object> claims = getClaims(token);
         Long userId = (Long) claims.get("uid");
         return employeeRepository
@@ -50,6 +59,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public String getRoleByToken(String token) {
+        log.debug(String.format("Finding role by token = %s", token));
         Map<String, Object> claims = getClaims(token);
         return (String) claims.get("role");
     }
@@ -61,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
                 .getBody();
     }
 
-    public JwtToken createToken(Long userId, String role) {
+    private JwtToken createToken(Long userId, String role) {
         LocalDateTime dateTime = LocalDateTime.now();
         Instant issuedDateInstant = dateTime.atZone(ZoneId.systemDefault()).toInstant();
         Instant expirationDateInstant = dateTime.plusHours(12).atZone(ZoneId.systemDefault()).toInstant();

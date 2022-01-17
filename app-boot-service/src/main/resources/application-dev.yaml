@@ -19,3 +19,6 @@ server:
 logging:
   file:
     name: ./logs/application.log
+  level:
+    com:
+      ifmo: debug

@@ -1,0 +1,15 @@
+# Project exclude paths
+/.gradle/
+/app-boot-service/build/
+/app-boot-service/build/classes/java/main/
+/app-commons/build/
+/app-commons/build/classes/java/main/
+/app-courses-service/build/
+/app-courses-service/build/classes/java/main/
+/app-person-service/build/
+/app-person-service/build/classes/java/main/
+/app-position-service/build/
+/app-position-service/build/classes/java/main/
+/app-user-service/build/
+/app-user-service/build/classes/java/main/
+/build/

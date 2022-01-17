@@ -16,3 +16,7 @@ server:
   servlet:
     context-path: "/api"
   port: 8080
+logging:
+  level:
+    com:
+      ifmo: debug
