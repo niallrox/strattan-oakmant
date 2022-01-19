@@ -56,7 +56,7 @@ public class AccessRoleAspect {
     private Object isRoleInList(ProceedingJoinPoint joinPoint, String
             mainRole, List<String> collectOfAnnotationArgs)
             throws Throwable {
-        if (collectOfAnnotationArgs.stream().anyMatch(s -> s.equals(mainRole))) {
+        if (collectOfAnnotationArgs.stream().anyMatch(s -> s.equalsIgnoreCase(mainRole))) {
             return joinPoint.proceed();
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not enough Rights");

@@ -15,21 +15,21 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/seller")
+@RequestMapping("/courses")
 @RequiredArgsConstructor
 @AccessRole({Role.SELLER})
-public class SellerController {
+public class CoursesController {
 
     private final CoursesService coursesService;
 
-    @GetMapping("/courses")
+    @GetMapping
     @ApiOperation(value = "Get actual courses", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created token"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden")
     })
-    public ResponseEntity<List<Course>> getActualCourses(@RequestHeader("authorization") String token) {
+    public ResponseEntity<List<Course>> getActualCourses(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(coursesService.getActualCourses());
     }
 }

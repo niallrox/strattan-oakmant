@@ -1,8 +1,10 @@
 package com.ifmo.isdb.strattanoakmant.configuration;
 
-import com.ifmo.isdb.strattanoakmant.Application;
+import com.ifmo.isdb.strattanoakmant.controller.dto.ApplicationDto;
 import com.ifmo.isdb.strattanoakmant.controller.dto.LoginDto;
+import com.ifmo.isdb.strattanoakmant.model.Application;
 import com.ifmo.isdb.strattanoakmant.model.Login;
+import com.ifmo.isdb.strattanoakmant.model.Person;
 import dev.akkinoc.spring.boot.orika.OrikaMapperFactoryConfigurer;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFactory;
@@ -20,5 +22,11 @@ public class OrikaMapperConfig implements OrikaMapperFactoryConfigurer {
     public void configure(@NotNull MapperFactory orikaMapperFactory) {
         log.debug("Configuring orika...");
         orikaMapperFactory.classMap(Login.class, LoginDto.class).byDefault().register();
+        orikaMapperFactory.classMap(Application.class, Person.class)
+                .field("name", "name")
+                .field("surname", "surname")
+                .field("phoneNumber", "phoneNumber")
+                .register();
+        orikaMapperFactory.classMap(Application.class, ApplicationDto.class).byDefault().register();
     }
 }

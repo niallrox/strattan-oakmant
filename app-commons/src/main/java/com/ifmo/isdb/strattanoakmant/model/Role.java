@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 public enum Role {
     HR("HR"),
-    SELLER("SELLER");
+    SELLER("SELLER"),
+    ANDREW("ANDREW GREEN"),
+    JORDAN("JORDAN BELLFORT");
 
     private String name;
 }

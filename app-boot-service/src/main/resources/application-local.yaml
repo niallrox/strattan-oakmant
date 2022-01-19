@@ -8,6 +8,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+    show-sql: true
   datasource:
     jdbc-url: jdbc:postgresql://localhost:5432/postgres
     username:
@@ -16,6 +17,7 @@ server:
   servlet:
     context-path: "/api"
   port: 8080
+
 logging:
   level:
     com:
