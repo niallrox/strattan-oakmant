@@ -1,0 +1,144 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, serif;
+    font-weight: 500;
+}
+.content{
+    background: url(../content/wolf_phone.jpg) no-repeat fixed;
+    background-size: 100%;
+    min-height: 700px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    color: white;
+    padding: 0 25px;
+    background-color: black;
+}
+.logo_content{
+    display: flex;
+    font-size: 50px;
+    align-items: center;
+}
+.logo_content img{
+    height: 75px;
+    width: 75px;
+}
+.burger{
+    display: flex;
+    flex-direction: column;
+}
+.burger:hover{
+    cursor: pointer;
+}
+.burger span{
+    height: 2px;
+    width: 33px;
+    margin-top: 8px;
+    background-color: white;
+}
+.burger span:first-child{
+    margin-top: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0, 0.7);
+}
+.head_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    color: white;
+    background-color: black;
+    min-height: 100px;
+}
+.function{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.function_open{
+    position: absolute;
+    width: 210px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    display: none;
+    background-color: black;
+    border: darkgray solid 5px;
+}
+.function_open_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.function_open_text span{
+    cursor: pointer;
+}
+.exit{
+    position: absolute;
+    top: -12%;
+    left: 93%;
+    cursor: pointer;
+}
+.exit img{
+    padding: 5px;
+    background-color: white;
+    border-radius: 25%;
+    height: 16px;
+    width: 16px;
+}
+.name{
+    margin-left: 25px;
+    font-size: 20px;
+}
+
+.work_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal_window{
+    position: fixed;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: #ca1413 solid 10px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.table{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 25px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255,255,255, 0.5);
+    padding: 20px 20px;
+}
+.function_open_text a{
+    color: white;
+    text-decoration: none;
+}

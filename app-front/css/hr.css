@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, serif;
+    font-weight: 500;
+}
+.content{
+    background: url(../content/wolf_phone.jpg) no-repeat fixed;
+    background-size: 100%;
+    min-height: 700px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    color: white;
+    padding: 0 25px;
+    background-color: black;
+}
+.logo_content{
+    display: flex;
+    font-size: 50px;
+    align-items: center;
+}
+.logo_content img{
+    height: 75px;
+    width: 75px;
+}
+.burger{
+    display: flex;
+    flex-direction: column;
+}
+.burger:hover{
+    cursor: pointer;
+}
+.burger span{
+    height: 2px;
+    width: 33px;
+    margin-top: 8px;
+    background-color: white;
+}
+.burger span:first-child{
+    margin-top: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0, 0.7);
+}
+.head_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    color: white;
+    background-color: black;
+    min-height: 100px;
+}
+.function{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.function_open{
+    position: absolute;
+    width: 210px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    display: none;
+    background-color: black;
+    border: darkgray solid 5px;
+}
+.function_open_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.function_open_text span{
+    cursor: pointer;
+}
+.exit{
+    position: absolute;
+    top: -12%;
+    left: 93%;
+    cursor: pointer;
+}
+.exit img{
+    padding: 5px;
+    background-color: white;
+    border-radius: 25%;
+    height: 16px;
+    width: 16px;
+}
+.name{
+    margin-left: 25px;
+    font-size: 20px;
+}
+
+.work_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 25px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.row_header{
+    display: flex;
+    background: rgba(255,255,255, 0.5);
+    padding: 20px 20px;
+    border-bottom: black 5px solid;
+}
+.row_header span{
+    font-size: 15px;
+    max-width: 110px;
+    min-width: 110px;
+    margin: 0 10px;
+    word-wrap: break-word;
+}
+.row{
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255, 0.5);
+    padding: 20px 20px;
+    transition: 0.5s;
+}
+.row span{
+    font-size: 15px;
+    max-width: 110px;
+    min-width: 110px;
+    margin: 0 10px;
+    word-wrap: break-word;
+}
+.function_open_text a{
+    color: white;
+    text-decoration: none;
+}
+.ok{
+    width: 40px;
+    height: 40px;
+    transition: 0.3s;
+}
+.row span:last-child{
+    max-width: 100px;
+    min-width: 100px;
+}
+.ok:hover{
+    cursor: pointer;
+}
+.responses{
+    display: flex;
+    justify-content: space-between;
+}
+.krest:hover{
+    cursor: pointer;
+}
+.krest{
+    width: 40px;
+    height: 40px;
+    transition: 0.3s;
+}
+
+@keyframes change_ok {
+    from {
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(0.5);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}

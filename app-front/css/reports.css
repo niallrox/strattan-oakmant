@@ -1,0 +1,230 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, serif;
+    font-weight: 500;
+}
+.content{
+    background: url(../content/wolf_phone.jpg) no-repeat fixed;
+    background-size: 100%;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    color: white;
+    padding: 0 25px;
+    background-color: black;
+    transition: 1s;
+}
+.logo_content{
+    display: flex;
+    font-size: 50px;
+    align-items: center;
+    transition: 2s;
+}
+.logo_content img{
+    height: 75px;
+    width: 75px;
+}
+.burger{
+    display: flex;
+    flex-direction: column;
+}
+.burger:hover{
+    cursor: pointer;
+}
+.burger span{
+    height: 2px;
+    width: 33px;
+    margin-top: 8px;
+    background-color: white;
+}
+.burger span:first-child{
+    margin-top: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: 800px;
+    min-height: 1300px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0, 0.7);
+}
+.head_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    color: white;
+    background-color: black;
+    min-height: 100px;
+}
+.function{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.function_open{
+    position: absolute;
+    width: 210px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    display: none;
+    background-color: black;
+    border: darkgray solid 5px;
+}
+.function_open_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.function_open_text span{
+    cursor: pointer;
+}
+.exit{
+    position: absolute;
+    top: -12%;
+    left: 93%;
+    cursor: pointer;
+}
+.exit img{
+    padding: 5px;
+    background-color: white;
+    border-radius: 25%;
+    height: 16px;
+    width: 16px;
+}
+.name{
+    margin-left: 25px;
+    font-size: 20px;
+}
+.coks{
+}
+.coks img{
+    margin-top: 50px;
+    height: 400px;
+    width: 400px;
+    cursor: pointer;
+    animation-duration: 2s;
+    animation-delay: revert;
+    animation-iteration-count: infinite;
+    animation-name: coks_move;
+    transition: 0.7s;
+}
+.coks img:hover{
+    height: 450px;
+    width: 450px;
+}
+.work_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.text{
+}
+.text textarea{
+    border: #ca1413 solid 10px;
+    width: 750px;
+    min-height: 500px;
+    resize: none;
+    outline: none;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+    font-size: 20px;
+}
+.autor{
+    display: flex;
+}
+.coks{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.coks span{
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+.modal_window{
+    position: fixed;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: #ca1413 solid 10px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    transition: 0.5s;
+}
+.modal_window span{
+    font-size: 25px;
+    margin-top: 25px;
+    text-align: center;
+}
+.modal_window img{
+    width: 600px;
+    height: 400px;
+}
+.button_ok{
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 25px;
+    border: #ca1413 solid 5px;
+    margin-top: 25px;
+}
+.button_ok:hover{
+    cursor: pointer;
+}
+.function_open_text a{
+    color: white;
+    text-decoration: none;
+}
+
+.modal_ok{
+    position: fixed;
+    opacity: 1;
+    top: 50%;
+    left: -50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: #2ecc71 solid 25px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    transition: 1s;
+    border-radius: 500px;
+}
+
+.modal_ok img{
+    width: 300px;
+    height: 300px;
+}
+
+@keyframes coks_move {
+    from {
+        transform: rotate(-10deg);
+    }
+
+    50%{
+        transform: rotate(10deg);
+    }
+
+    to {
+        transform: rotate(-10deg);
+    }
+}
