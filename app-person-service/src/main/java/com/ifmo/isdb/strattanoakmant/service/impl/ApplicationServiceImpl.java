@@ -25,8 +25,9 @@ public class ApplicationServiceImpl implements ApplicationService {
             LoggerFactory.getLogger(ApplicationServiceImpl.class);
 
     private final ApplicationRepository applicationRepository;
-    private final PersonRepository personRepository;
-    private final MapperFacade mapperFacade;
+
+    private static final String REFUSAL_RESPONSE = "Да и пошел он!";
+    private static final String ACCEPT_RESPONSE = "Одобрено! У вас новый сотрудник";
 
     @Override
     public List<Application> getApplications() {
@@ -35,12 +36,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void deleteApplication(Long id) {
+    public String deleteApplication(Long id, boolean reason) {
         log.debug(String.format("Deleting application with id = %s", id));
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Can't find application by id = %s ", id)));
         applicationRepository.delete(application);
+        return reason ? ACCEPT_RESPONSE : REFUSAL_RESPONSE;
     }
 
     @Override

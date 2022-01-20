@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,9 +61,8 @@ public class ApplicationController {
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden")
     })
-    public ResponseEntity<Void> deleteApplication(@RequestHeader("Authorization") String token,
+    public ResponseEntity<String> deleteApplication(@RequestHeader("Authorization") String token, boolean reason,
                                                          @PathVariable Long id) {
-        applicationService.deleteApplication(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(applicationService.deleteApplication(id, reason));
     }
 }

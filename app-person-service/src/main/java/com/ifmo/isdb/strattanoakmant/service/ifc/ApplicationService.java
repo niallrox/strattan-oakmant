@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ApplicationService {
     List<Application> getApplications();
-    void deleteApplication(Long id);
+    String deleteApplication(Long id, boolean reason);
     Application saveApplication(Application application);
 }
