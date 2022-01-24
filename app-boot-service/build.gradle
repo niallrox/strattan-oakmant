@@ -8,5 +8,6 @@ dependencies {
     implementation project(':app-commons')
     implementation project(':app-position-service')
     implementation project(':app-courses-service')
+    implementation 'org.liquibase:liquibase-core:4.7.0'
     implementation 'dev.akkinoc.spring.boot:orika-spring-boot-starter:2.2.2'
 }

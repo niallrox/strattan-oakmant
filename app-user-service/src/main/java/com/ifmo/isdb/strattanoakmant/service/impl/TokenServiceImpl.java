@@ -10,10 +10,12 @@ import com.ifmo.isdb.strattanoakmant.service.ifc.TokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,8 +36,11 @@ public class TokenServiceImpl implements TokenService {
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
     private final TokenRepository tokenRepository;
+    private final CacheManager cacheManager;
+
 
     @Override
+    @Cacheable(value = "token", key = "#login.login")
     public JwtToken createToken(Login login) {
         log.debug(String.format("Creating token for user = %s", login.getLogin()));
         Employee employee = Optional
@@ -53,9 +58,9 @@ public class TokenServiceImpl implements TokenService {
     public Employee getUserByToken(String token) {
         log.debug(String.format("Finding user by token = %s", token));
         Map<String, Object> claims = getClaims(token);
-        Long userId = (Long) claims.get("uid");
+        Integer userId = (Integer) claims.get("uid");
         return employeeRepository
-                .findById(userId)
+                .findById(new Long(userId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         String.format("Bad token, no employee for id = %s ", userId)));
     }
@@ -94,6 +99,22 @@ public class TokenServiceImpl implements TokenService {
                 .setExpiration(Date.from(expirationDateInstant))
                 .compact();
 
-        return new JwtToken(compact, role);
+        return new JwtToken(compact, role, LocalDateTime.now());
+    }
+
+    @Scheduled(cron = "*/10 * * * * ?")
+    public void refreshTokens() {
+        List<JwtToken> all = tokenRepository.findAll();
+        for (JwtToken token :
+                all) {
+            if (token.getLocalDateTime().plusHours(1).isBefore(LocalDateTime.now())) {
+                tokenRepository.delete(token);
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = 10000)
+    public void evictTokenAtIntervals() {
+        Objects.requireNonNull(cacheManager.getCache("token")).clear();
     }
 }

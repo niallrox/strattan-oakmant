@@ -13,6 +13,8 @@ spring:
     jdbc-url: jdbc:postgresql://pg:5432/studs
     username:
     password:
+  liquibase:
+    change-log: db.changelog/db.changelog-master.xml
 server:
   servlet:
     context-path: "/api"

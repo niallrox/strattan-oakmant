@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+    logicalFilePath="db.changelog">
+
+
+    <changeSet author="Ivan Lednev" id="1">
+        <sqlFile dbms="!h2, oracle, mysql, postgres"
+                 path="db.changelog/changes/202201221437-creating-and-filling"
+                 relativeToChangelogFile="false"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet author="Maxim Rybalchenko" id="2">
+        <sqlFile dbms="!h2, oracle, mysql, postgres"
+                 path="db.changelog/changes/202201221439-create-triggers"
+                 relativeToChangelogFile="false"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet author="Ivan Lednev" id="3">
+        <sqlFile dbms="!h2, oracle, mysql, postgres"
+                 path="db.changelog/changes/202201221440-create-business-functions"
+                 relativeToChangelogFile="false"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet author="Ivan Lednev" id="4">
+        <sqlFile dbms="!h2, oracle, mysql, postgres"
+                 path="db.changelog/changes/202201241636-add-new-types.sql"
+                 relativeToChangelogFile="false"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>

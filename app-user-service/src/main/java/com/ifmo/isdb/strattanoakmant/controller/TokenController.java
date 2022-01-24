@@ -1,6 +1,7 @@
 package com.ifmo.isdb.strattanoakmant.controller;
 
 import com.ifmo.isdb.strattanoakmant.controller.dto.LoginDto;
+import com.ifmo.isdb.strattanoakmant.model.Employee;
 import com.ifmo.isdb.strattanoakmant.model.JwtToken;
 import com.ifmo.isdb.strattanoakmant.model.Login;
 import com.ifmo.isdb.strattanoakmant.service.ifc.TokenService;
@@ -33,5 +34,17 @@ public class TokenController {
     })
     public ResponseEntity<JwtToken> getToken(@Valid @RequestBody LoginDto loginDto) {
         return ResponseEntity.ok(tokenService.createToken(mapperFacade.map(loginDto, Login.class)));
+    }
+
+    @GetMapping("/user-credentials")
+    @ApiOperation(value = "Get user info", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully get user info"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden")
+    })
+    public ResponseEntity<String> getToken(@RequestHeader("Authorization") String token) {
+        Employee creds = tokenService.getUserByToken(token);
+        return ResponseEntity.ok(creds.getName() + " " + creds.getSurname());
     }
 }

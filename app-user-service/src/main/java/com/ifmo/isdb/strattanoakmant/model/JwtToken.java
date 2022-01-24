@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +28,10 @@ public class JwtToken {
     @Column(name = "role")
     @JsonProperty("role")
     private String role;
+
+    @Column(name = "time")
+    @JsonProperty("created_time")
+    private LocalDateTime localDateTime;
 
     @Override
     public boolean equals(Object o) {

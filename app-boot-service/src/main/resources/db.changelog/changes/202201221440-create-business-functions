@@ -1,0 +1,80 @@
+CREATE SEQUENCE IF NOT EXISTS daily_profit_ids START 1;
+CREATE SEQUENCE IF NOT EXISTS filial_daily_profit_ids START 1;
+
+CREATE OR REPLACE FUNCTION get_daily_profit_from_reports(filial_id_value INT) RETURNS INT
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    SELECT sum(amount*stock_price) FROM report
+                                            INNER JOIN report_employer re on report.id = re.report_id
+                                            INNER JOIN filial_employer fe on re.employer_id = fe.employer_id
+    WHERE fe.filial_id = filial_id_value;
+END;
+$$;
+
+
+
+CREATE OR REPLACE FUNCTION insert_daily_profit(filial_id_value INT, profit_value INT) RETURNS void
+    Language plpgsql
+AS
+$$
+BEGIN
+    INSERT INTO daily_profit(id, date, profit) VALUES (nextval(daily_profit_ids), current_date, profit_value);
+    INSERT INTO filial_daily_profit(id, filial_id, daily_profit_id) VALUES (nextval(filial_daily_profit_ids), filial_id_value, currval(daily_profit_ids));
+END;
+$$;
+
+CREATE SEQUENCE IF NOT EXISTS employer_ids START 1;
+CREATE SEQUENCE IF NOT EXISTS position_employer_ids START 1;
+CREATE SEQUENCE IF NOT EXISTS person_employer_ids START 1;
+
+
+
+
+CREATE OR REPLACE FUNCTION approve_candidate(person_id_value INT, position_id_value INT) RETURNS void
+    Language plpgsql
+AS
+$$
+BEGIN
+    INSERT INTO employee(id, employment_date) VALUES (nextval(employer_ids), current_date);
+    INSERT INTO person_employer VALUES (nextval(person_employer_ids), person_id_value, currval(employer_ids));
+    INSERT INTO position_employer VALUES (nextval(position_employer_ids), currval(employer_ids), position_id_value);
+    Commit;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION get_employer_level(employer_id_value INT) RETURNS TEXT
+    Language plpgsql
+AS
+$$
+BEGIN
+    SELECT concat("left"(p.type,1), rc.level) FROM employee AS e
+                                                       INNER JOIN position_employer pe on e.id = pe.employer_id
+                                                       INNER JOIN position p on p.id = pe.position_id
+                                                       Inner Join position_range_coefficient prc on p.id = prc.position_id
+                                                       INNER JOIN range_coefficient rc on rc.id = prc.range_coefficient_id
+    WHERE e.id = employer_id_value;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION upgrade_candidate(employer_id INT, range_coefficient_id_value  INT) RETURNS void
+    Language plpgsql
+AS
+$$
+BEGIN
+    UPDATE employer_range_coefficient  SET range_coefficient_id = range_coefficient_id_value WHERE id = employer_id;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION get_year_earning(filial_id_value INT) RETURNS INT
+    Language plpgsql
+AS
+$$
+BEGIN
+    SELECT sum(dp.profit) FROM filial_daily_profit AS fdp
+                                   INNER JOIN daily_profit dp on dp.id = fdp.daily_profit_id
+    WHERE fdp.filial_id = filial_id_value
+      AND date BETWEEN current_date - integer '365' AND current_date;
+END
+$$;

@@ -1,0 +1,36 @@
+CREATE OR REPLACE FUNCTION add_new_person() RETURNS TRIGGER
+    Language plpgsql
+AS
+$$
+BEGIN
+    INSERT INTO person(id, name, surname, phone_number)
+    VALUES (nextval(person_ids), new.name, new.surname, new.phone_number);
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER job_application_trigger
+    AFTER INSERT
+    ON job_application
+    FOR EACH ROW
+EXECUTE PROCEDURE add_new_person();
+
+CREATE SEQUENCE if not exists person_ids START 1;
+
+CREATE OR REPLACE FUNCTION delete_cascade_person() RETURNS TRIGGER
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    DELETE FROM person_client AS pc WHERE pc.person_id =
+                                          old.id;
+    DELETE FROM person_employer AS pe WHERE pe.person_id = old.id;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER remove_person
+    AFTER DELETE
+    ON person
+    FOR EACH ROW
+EXECUTE PROCEDURE delete_cascade_person();

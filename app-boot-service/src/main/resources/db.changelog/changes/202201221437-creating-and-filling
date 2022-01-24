@@ -1,0 +1,286 @@
+CREATE TABLE IF NOT EXISTS person
+(
+    id INT PRIMARY KEY check (id > 0),
+    name VARCHAR,
+    surname VARCHAR,
+    phone_number VARCHAR
+);
+
+INSERT INTO person VALUES (1, 'Maxim', 'Rybalchenko', '+7999999999');
+INSERT INTO person VALUES (2, 'Ivan', 'Lednev', '+788888888');
+INSERT INTO person VALUES (3, 'Daniil', 'Popov', '+777777777');
+INSERT INTO person VALUES (4, 'Evgeny', 'Makaryev', '+766666666');
+INSERT INTO person VALUES (5, 'Ryxlyada', 'Pyfov', '+75555555');
+
+
+
+
+CREATE TYPE employer_type AS ENUM ('HR', 'SELLER');
+
+CREATE TABLE IF NOT EXISTS employee
+(
+    id INT PRIMARY KEY check (id > 0),
+    employment_date DATE
+);
+
+INSERT INTO employee VALUES (1, current_date);
+INSERT INTO employee VALUES (2, current_date);
+
+CREATE TABLE IF NOT EXISTS range_coefficient(
+                                                id INT PRIMARY KEY check ( id > 0 ),
+                                                level INT,
+                                                coefficient DOUBLE PRECISION
+);
+
+INSERT INTO range_coefficient VALUES (1, 0, 1.0);
+INSERT INTO range_coefficient VALUES (2, 2, 1.5);
+INSERT INTO range_coefficient VALUES (3, 3, 2.0);
+
+
+
+CREATE TABLE IF NOT EXISTS position
+(
+    id INT PRIMARY KEY check (id > 0),
+    type employer_type,
+    start_salary INT
+);
+
+INSERT INTO position VALUES (1, 'HR', 100000);
+INSERT INTO position VALUES (2, 'SELLER', 80000);
+
+
+CREATE TABLE IF NOT EXISTS position_range_coefficient
+(
+    id INT PRIMARY KEY check (id > 0),
+    position_id INT,
+    range_coefficient_id INT,
+    FOREIGN KEY (position_id) REFERENCES position ("id"),
+    FOREIGN KEY (range_coefficient_id) REFERENCES range_coefficient ("id")
+);
+
+INSERT INTO position_range_coefficient VALUES (1, 1, 1);
+INSERT INTO position_range_coefficient VALUES (2, 1, 3);
+INSERT INTO position_range_coefficient VALUES (3, 2, 1);
+INSERT INTO position_range_coefficient VALUES (4, 2, 2);
+INSERT INTO position_range_coefficient VALUES (5, 2, 3);
+
+CREATE TABLE IF NOT EXISTS employer_range_coefficient
+(
+    id INT PRIMARY KEY check (id > 0),
+    employer_id INT,
+    range_coefficient_id INT,
+    FOREIGN KEY (employer_id) REFERENCES employee ("id"),
+    FOREIGN KEY (range_coefficient_id) REFERENCES range_coefficient ("id")
+);
+
+CREATE TABLE IF NOT EXISTS position_employer
+(
+    id INT PRIMARY KEY check (id > 0),
+    position_id INT,
+    employer_id INT,
+    FOREIGN KEY (position_id) REFERENCES position ("id"),
+    FOREIGN KEY (employer_id) REFERENCES employee ("id")
+);
+
+INSERT INTO position_employer VALUES (1, 1, 1);
+INSERT INTO position_employer VALUES (2, 2, 2);
+
+
+CREATE TYPE client_type AS ENUM ('ЛОХ', 'ПОД ВОПРОСОМ', 'НЕПЕРЕУБЕЖДАЕМЫЙ');
+
+CREATE TABLE IF NOT EXISTS client
+(
+    id INT PRIMARY KEY check (id > 0),
+    type client_type
+);
+
+CREATE INDEX IF NOT EXISTS client_type_index ON client
+    (type) WHERE type = 'ЛОХ' OR type = 'ПОД ВОПРОСОМ';
+
+INSERT INTO client VALUES (1, 'ЛОХ');
+INSERT INTO client VALUES (2, 'ПОД ВОПРОСОМ');
+INSERT INTO client VALUES (3, 'НЕПЕРЕУБЕЖДАЕМЫЙ');
+
+
+CREATE TABLE IF NOT EXISTS filial
+(
+    id INT PRIMARY KEY check (id > 0),
+    name VARCHAR
+);
+
+INSERT INTO filial VALUES (1, 'ПУФО - Питерский универсальный филиал обмана');
+
+CREATE TABLE IF NOT EXISTS city
+(
+    id INT PRIMARY KEY check (id > 0),
+    name VARCHAR
+);
+
+INSERT INTO city VALUES (1, 'Санкт-Петербург');
+
+CREATE TABLE IF NOT EXISTS country
+(
+    id INT PRIMARY KEY check (id > 0),
+    name VARCHAR,
+    code VARCHAR(2)
+);
+
+INSERT INTO country VALUES (1, 'Россия', '99');
+
+CREATE TABLE IF NOT EXISTS job_application
+(
+    id INT PRIMARY KEY check (id > 0),
+    name VARCHAR,
+    surname VARCHAR,
+    education VARCHAR,
+    about_yourself VARCHAR,
+    phone_number VARCHAR
+);
+
+INSERT INTO job_application VALUES (1, 'Daniil', 'Primachenko', '12 школа Белой глины',
+                                    'Реальный пацан. могу обмануть любое создание, ' ||
+                                    'даже представителей океана', '+7991231242');
+
+CREATE TABLE IF NOT EXISTS daily_profit
+(
+    id INT PRIMARY KEY check (id > 0),
+    date DATE,
+    profit INT
+);
+
+INSERT INTO daily_profit VALUES (1, current_date, 102010210102);
+
+CREATE TABLE IF NOT EXISTS office
+(
+    id INT PRIMARY KEY check (id > 0),
+    street VARCHAR,
+    home INT
+);
+
+INSERT INTO office VALUES (1, 'ул.Театральная', 228);
+
+CREATE TABLE IF NOT EXISTS report
+(
+    id INT PRIMARY KEY check (id > 0),
+    date DATE,
+    stock_name VARCHAR,
+    stock_price INT,
+    amount INT
+);
+
+INSERT INTO report VALUES (1, current_date, 'Tune-IT', 1, 1);
+
+CREATE TABLE IF NOT EXISTS person_employer
+(
+    id INT PRIMARY KEY check (id > 0),
+    person_id INT,
+    employer_id INT,
+    FOREIGN KEY (person_id) REFERENCES person ("id"),
+    FOREIGN KEY (employer_id) REFERENCES employee ("id")
+);
+
+INSERT INTO person_employer VALUES (1, 1, 1);
+INSERT INTO person_employer VALUES (2, 2, 2);
+
+CREATE TABLE IF NOT EXISTS person_client
+(
+    id INT PRIMARY KEY check (id > 0),
+    person_id INT,
+    client_id INT,
+    FOREIGN KEY (person_id) REFERENCES person ("id"),
+    FOREIGN KEY (client_id) REFERENCES client ("id")
+);
+
+INSERT INTO person_client VALUES (1, 3, 2);
+INSERT INTO person_client VALUES (2, 4, 3);
+INSERT INTO person_client VALUES (3, 5, 1);
+
+
+
+CREATE TABLE IF NOT EXISTS position_employer
+(
+    id INT PRIMARY KEY check (id > 0),
+    position_id INT,
+    employer_id INT,
+    FOREIGN KEY (position_id) REFERENCES position ("id"),
+    FOREIGN KEY (employer_id) REFERENCES employee ("id")
+);
+
+CREATE TABLE IF NOT EXISTS filial_employer
+(
+    id INT PRIMARY KEY check (id > 0),
+    filial_id INT,
+    employer_id INT,
+    FOREIGN KEY (filial_id) REFERENCES filial ("id"),
+    FOREIGN KEY (employer_id) REFERENCES employee ("id")
+);
+
+INSERT INTO filial_employer VALUES (1, 1, 1);
+INSERT INTO filial_employer VALUES (2, 1, 2);
+
+
+CREATE TABLE IF NOT EXISTS filial_office
+(
+    id INT PRIMARY KEY check (id > 0),
+    filial_id INT,
+    office_id INT,
+    FOREIGN KEY (filial_id) REFERENCES filial ("id"),
+    FOREIGN KEY (office_id) REFERENCES office ("id")
+);
+
+INSERT INTO filial_office VALUES (1, 1, 1);
+
+CREATE TABLE if not exists city_office
+(
+    id INT PRIMARY KEY check (id > 0),
+    city_id INT,
+    office_id INT,
+    FOREIGN KEY (city_id) REFERENCES city ("id"),
+    FOREIGN KEY (office_id) REFERENCES office ("id")
+);
+
+INSERT INTO city_office VALUES (1, 1, 1);
+
+CREATE TABLE IF NOT EXISTS city_country
+(
+    id INT PRIMARY KEY check (id > 0),
+    city_id INT,
+    country_id INT,
+    FOREIGN KEY (city_id) REFERENCES city ("id"),
+    FOREIGN KEY (country_id) REFERENCES country ("id")
+);
+
+Insert Into city_country VALUES (1,1,1);
+
+CREATE TABLE IF NOT EXISTS report_client
+(
+    id INT PRIMARY KEY check (id > 0),
+    report_id INT,
+    client_id INT,
+    FOREIGN KEY (report_id) REFERENCES report ("id"),
+    FOREIGN KEY (client_id) REFERENCES client ("id")
+);
+
+INSERT INTO report_client VALUES (1, 1, 1);
+
+CREATE TABLE IF NOT EXISTS report_employer
+(
+    id INT PRIMARY KEY check (id > 0),
+    report_id INT,
+    employer_id INT,
+    FOREIGN KEY (report_id) REFERENCES report ("id"),
+    FOREIGN KEY (employer_id) REFERENCES employee ("id")
+);
+
+INSERT INTO report_employer VALUES (1, 1, 2);
+
+CREATE TABLE IF NOT EXISTS filial_daily_profit
+(
+    id INT PRIMARY KEY check (id > 0),
+    filial_id INT,
+    daily_profit_id INT,
+    FOREIGN KEY (filial_id) REFERENCES filial ("id"),
+    FOREIGN KEY (daily_profit_id) REFERENCES daily_profit ("id")
+);
+
+INSERT INTO filial_daily_profit VALUES (1, 1, 1);
